@@ -588,30 +588,34 @@
   }
   observeCards();
 
-  // Google Places — live reviews
-  function initReviews() {
-    const service = new google.maps.places.PlacesService(document.createElement('div'));
-    service.getDetails(
-      { placeId: 'ChIJW-_WCwBjfg0RtUvhUfnu5jQ', fields: ['reviews', 'rating'] },
-      (place, status) => {
-        const grid = document.getElementById('reviews-grid');
-        if (status !== google.maps.places.PlacesServiceStatus.OK || !place.reviews || !place.reviews.length) {
-          grid.innerHTML = '<div class="testimonial-card" style="grid-column:1/-1;text-align:center;opacity:.5;">No reviews found.</div>';
-          return;
-        }
-        const escape = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-        grid.innerHTML = place.reviews.slice(0, 3).map(r => `
-          <div class="testimonial-card">
-            <div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-            <p class="testimonial-quote">${escape(r.text)}</p>
-            <div class="testimonial-author">${escape(r.author_name)} · Google Review</div>
-          </div>
-        `).join('');
-        observeCards();
+  // Google Places — live reviews (new Places API)
+  async function initReviews() {
+    const { Place } = await google.maps.importLibrary('places');
+    const place = new Place({ id: 'ChIJW-_WCwBjfg0RtUvhUfnu5jQ' });
+    const grid = document.getElementById('reviews-grid');
+    try {
+      await place.fetchFields({ fields: ['reviews', 'rating'] });
+      const reviews = place.reviews;
+      if (!reviews || !reviews.length) {
+        grid.innerHTML = '<div class="testimonial-card" style="grid-column:1/-1;text-align:center;opacity:.5;">No reviews found.</div>';
+        return;
       }
-    );
+      const escape = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      grid.innerHTML = reviews.slice(0, 3).map(r => `
+        <div class="testimonial-card">
+          <div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+          <p class="testimonial-quote">${escape(r.text.text)}</p>
+          <div class="testimonial-author">${escape(r.authorAttribution.displayName)} · Google Review</div>
+        </div>
+      `).join('');
+      observeCards();
+    } catch(e) {
+      grid.innerHTML = '<div class="testimonial-card" style="grid-column:1/-1;text-align:center;opacity:.5;">Unable to load reviews.</div>';
+    }
   }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjJo9A2605cDsY7jN2wCdpGXbM_GoSYss&libraries=places&callback=initReviews" async defer></script>
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjJo9A2605cDsY7jN2wCdpGXbM_GoSYss&loading=async&callback=initReviews">
+</script>
 </body>
 </html>
