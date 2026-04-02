@@ -595,21 +595,26 @@
     const grid = document.getElementById('reviews-grid');
     try {
       await place.fetchFields({ fields: ['reviews', 'rating'] });
+      console.log('place.reviews:', place.reviews);
       const reviews = place.reviews;
       if (!reviews || !reviews.length) {
         grid.innerHTML = '<div class="testimonial-card" style="grid-column:1/-1;text-align:center;opacity:.5;">No reviews found.</div>';
         return;
       }
       const escape = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      grid.innerHTML = reviews.slice(0, 3).map(r => `
-        <div class="testimonial-card">
-          <div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-          <p class="testimonial-quote">${escape(r.text.text)}</p>
-          <div class="testimonial-author">${escape(r.authorAttribution.displayName)} · Google Review</div>
-        </div>
-      `).join('');
+      grid.innerHTML = reviews.slice(0, 3).map(r => {
+        console.log('review object:', r);
+        return `
+          <div class="testimonial-card">
+            <div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+            <p class="testimonial-quote">${escape(r.text.text)}</p>
+            <div class="testimonial-author">${escape(r.authorAttribution.displayName)} · Google Review</div>
+          </div>
+        `;
+      }).join('');
       observeCards();
     } catch(e) {
+      console.error('Places error:', e);
       grid.innerHTML = '<div class="testimonial-card" style="grid-column:1/-1;text-align:center;opacity:.5;">Unable to load reviews.</div>';
     }
   }
