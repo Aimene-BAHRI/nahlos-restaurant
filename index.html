@@ -601,14 +601,16 @@
         grid.innerHTML = '<div class="testimonial-card" style="grid-column:1/-1;text-align:center;opacity:.5;">No reviews found.</div>';
         return;
       }
-      const escape = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const escape = s => (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       grid.innerHTML = reviews.slice(0, 3).map(r => {
-        console.log('review object:', r);
+        console.log('review object:', JSON.stringify(r));
+        const text = r.text?.text ?? r.text ?? '';
+        const author = r.authorAttribution?.displayName ?? r.author_name ?? 'Guest';
         return `
           <div class="testimonial-card">
             <div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-            <p class="testimonial-quote">${escape(r.text.text)}</p>
-            <div class="testimonial-author">${escape(r.authorAttribution.displayName)} · Google Review</div>
+            <p class="testimonial-quote">${escape(text)}</p>
+            <div class="testimonial-author">${escape(author)} · Google Review</div>
           </div>
         `;
       }).join('');
