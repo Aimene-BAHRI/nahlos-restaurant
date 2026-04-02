@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nahlo's Restaurant — Oran, Algeria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --dark: #1a1208;
+    --gold: #c9a84c;
+    --rust: #b84a2e;
+    --sand: #e8d9bc;
+    --deep: #2c1a0e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    mix-blend-mode: normal;
+    background: transparent;
+    transition: background .4s, padding .4s;
+  }
+  nav.scrolled {
+    background: rgba(26,18,8,.92);
+    backdrop-filter: blur(8px);
+    padding: 1rem 3rem;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: .08em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+    opacity: .85; transition: opacity .2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-reserve {
+    background: var(--gold); color: var(--dark);
+    padding: .55rem 1.4rem;
+    font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+    border: none; cursor: pointer; font-family: 'Jost', sans-serif;
+    font-weight: 400; transition: background .2s;
+    text-decoration: none;
+  }
+  .nav-reserve:hover { background: #dbbe6a; }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh; min-height: 640px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(160deg, rgba(26,18,8,.35) 0%, rgba(26,18,8,.7) 60%, rgba(26,18,8,.9) 100%),
+      url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80&auto=format&fit=crop') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: zoomOut 12s ease forwards;
+  }
+  @keyframes zoomOut { to { transform: scale(1); } }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 3rem 5rem;
+    max-width: 700px;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp .9s .4s forwards;
+  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  .hero-eyebrow {
+    color: var(--gold); font-size: .72rem;
+    letter-spacing: .3em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7vw, 6rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.05;
+    margin-bottom: 1.4rem;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    color: rgba(245,240,232,.7);
+    font-size: .95rem; line-height: 1.7;
+    max-width: 440px; margin-bottom: 2.4rem;
+  }
+  .hero-ctas { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--rust); color: var(--cream);
+    padding: .9rem 2rem; font-size: .75rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-weight: 400;
+    text-decoration: none; transition: background .2s;
+  }
+  .btn-primary:hover { background: #d45c36; }
+  .btn-outline {
+    border: 1px solid rgba(245,240,232,.45); color: var(--cream);
+    padding: .9rem 2rem; font-size: .75rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    background: transparent; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-weight: 300;
+    text-decoration: none; transition: border-color .2s;
+  }
+  .btn-outline:hover { border-color: var(--cream); }
+
+  .hero-badge {
+    position: absolute; right: 3.5rem; bottom: 5rem; z-index: 2;
+    width: 110px; height: 110px;
+    border: 1px solid rgba(201,168,76,.5);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    animation: fadeUp .9s .8s both;
+  }
+  .hero-badge .stars { color: var(--gold); font-size: .9rem; letter-spacing: .1em; }
+  .hero-badge .rating { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--cream); line-height: 1; }
+  .hero-badge .source { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(245,240,232,.55); margin-top: .2rem; }
+
+  /* ── STRIP ── */
+  .strip {
+    background: var(--deep);
+    display: flex; justify-content: center; gap: 0;
+  }
+  .strip-item {
+    padding: 1.5rem 3.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(201,168,76,.15);
+    flex: 1;
+  }
+  .strip-item:last-child { border-right: none; }
+  .strip-label { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  .strip-value { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--cream); margin-top: .25rem; }
+
+  /* ── ABOUT ── */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+  }
+  .about-img {
+    position: relative; overflow: hidden;
+  }
+  .about-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+  .about-img:hover img { transform: scale(1.04); }
+  .about-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(44,26,14,.2), transparent);
+  }
+  .about-text {
+    background: var(--sand);
+    padding: 6rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .section-label {
+    font-size: .62rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--rust); margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 300; line-height: 1.15;
+    margin-bottom: 1.8rem;
+  }
+  .section-title em { font-style: italic; color: var(--rust); }
+  .about-p { font-size: .92rem; line-height: 1.85; color: #4a3520; margin-bottom: 1.2rem; }
+  .about-sig {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-style: italic;
+    color: var(--rust); margin-top: 1.5rem;
+  }
+
+  /* ── MENU PREVIEW ── */
+  .menu-section {
+    background: var(--dark); padding: 6rem 3rem;
+  }
+  .menu-header { text-align: center; margin-bottom: 4rem; }
+  .menu-header .section-label { color: var(--gold); }
+  .menu-header .section-title { color: var(--cream); }
+  .menu-tabs {
+    display: flex; justify-content: center; gap: 0;
+    margin-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(201,168,76,.2);
+  }
+  .tab {
+    padding: .9rem 2.2rem; background: none; border: none;
+    font-family: 'Jost', sans-serif; font-size: .75rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(245,240,232,.45); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: all .25s;
+  }
+  .tab.active, .tab:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .menu-card {
+    background: rgba(255,255,255,.04);
+    padding: 2.2rem;
+    border: 1px solid rgba(201,168,76,.08);
+    transition: background .2s;
+  }
+  .menu-card:hover { background: rgba(201,168,76,.06); }
+  .menu-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .8rem; }
+  .menu-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 400; color: var(--cream);
+    flex: 1; padding-right: 1rem;
+  }
+  .menu-card-price { color: var(--gold); font-size: .85rem; white-space: nowrap; }
+  .menu-card-desc { font-size: .8rem; line-height: 1.7; color: rgba(245,240,232,.5); }
+  .menu-card-tag {
+    display: inline-block; margin-top: 1rem;
+    font-size: .6rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--rust); border: 1px solid rgba(184,74,46,.3);
+    padding: .25rem .6rem;
+  }
+
+  /* ── GALLERY ── */
+  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 280px 280px; }
+  .gallery-item { overflow: hidden; position: relative; }
+  .gallery-item:nth-child(1) { grid-column: 1 / 3; }
+  .gallery-item:nth-child(4) { grid-column: 3 / 5; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(26,18,8,0); transition: background .4s;
+  }
+  .gallery-item:hover::after { background: rgba(26,18,8,.2); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--sand); padding: 6rem 3rem; }
+  .testimonials-header { text-align: center; margin-bottom: 4rem; }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .testimonial-card {
+    background: var(--cream); padding: 2.5rem;
+    border-left: 3px solid var(--gold);
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    line-height: 1.7; color: var(--deep);
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-quote::before { content: '\201C'; color: var(--gold); font-size: 2rem; line-height: 0; vertical-align: -.3em; margin-right: .2rem; }
+  .testimonial-author { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--rust); }
+  .testimonial-stars { color: var(--gold); margin-bottom: .8rem; font-size: .85rem; }
+
+  /* ── INFO ── */
+  .info {
+    background: var(--deep);
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    padding: 5rem 3rem;
+    gap: 3rem; max-width: 1100px; margin: 0 auto;
+  }
+  .info-block .section-label { color: var(--gold); margin-bottom: 1.5rem; }
+  .info-block p { color: rgba(245,240,232,.65); font-size: .88rem; line-height: 1.9; }
+  .info-block a { color: var(--gold); text-decoration: none; }
+  .info-block strong { color: var(--cream); font-weight: 400; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: var(--rust);
+    padding: 5rem 3rem;
+    text-align: center;
+  }
+  .cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300; color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .cta-banner p { color: rgba(245,240,232,.8); margin-bottom: 2.5rem; font-size: .9rem; }
+  .btn-white {
+    background: var(--cream); color: var(--rust);
+    padding: 1rem 2.8rem; font-size: .75rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-weight: 400;
+    text-decoration: none; transition: background .2s;
+  }
+  .btn-white:hover { background: #fffaf2; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 3rem; text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; color: var(--cream); display: block; margin-bottom: .5rem;
+  }
+  footer p { font-size: .7rem; letter-spacing: .12em; color: rgba(245,240,232,.35); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 1.5rem 3.5rem; }
+    .hero-badge { display: none; }
+    .strip { flex-direction: column; }
+    .strip-item { border-right: none; border-bottom: 1px solid rgba(201,168,76,.15); }
+    .about { grid-template-columns: 1fr; }
+    .about-img { height: 350px; }
+    .about-text { padding: 3.5rem 2rem; }
+    .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-column: auto; }
+    .info { grid-template-columns: 1fr; padding: 3rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Nahlo's</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:+213661217517" class="nav-reserve">Reserve a Table</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Bir El Djir · Oran, Algeria</p>
+    <h1 class="hero-title">A <em>Spanish soul</em><br>in the heart of Oran</h1>
+    <p class="hero-sub">Where the flavors of the Mediterranean meet the warmth of Algerian hospitality. Fresh seafood, handcrafted paella, and an atmosphere you'll never forget.</p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-primary">Explore the Menu</a>
+      <a href="tel:+213661217517" class="btn-outline">+213 661 21 75 17</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="stars">★★★★★</div>
+    <div class="rating">4.8</div>
+    <div class="source">Google Reviews</div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <div class="strip-label">Cuisine</div>
+    <div class="strip-value">Spanish · Seafood</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">Open</div>
+    <div class="strip-value">Mon – Sat, 7 PM – 11 PM</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">Location</div>
+    <div class="strip-value">Résidence Mirage 2, Bir El Djir</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">Reservations</div>
+    <div class="strip-value">+213 661 21 75 17</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=900&q=80&auto=format&fit=crop" alt="Paella dish at Nahlo's Restaurant">
+    <div class="about-img-overlay"></div>
+  </div>
+  <div class="about-text">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">Crafted with <em>passion</em>,<br>served with heart</h2>
+    <p class="about-p">Nahlo's was born from a deep love for Spanish cuisine and the vibrant culinary traditions of the Mediterranean. Every dish is a journey — from the saffron-infused paella negra to our fresh tapas made with locally sourced ingredients.</p>
+    <p class="about-p">Our host Ihab and the entire team pour genuine warmth into every visit, making sure each guest feels like they've stepped into a little corner of Spain right here in Oran.</p>
+    <div class="about-sig">— Ihab & the Nahlo's Team</div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <p class="section-label">What We Serve</p>
+    <h2 class="section-title" style="color:var(--cream)">A taste of <em style="color:var(--gold)">the Mediterranean</em></h2>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab active">Tapas</button>
+    <button class="tab">Paella</button>
+    <button class="tab">Seafood</button>
+    <button class="tab">Drinks</button>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-top">
+        <div class="menu-card-name">Gambas al Ajillo</div>
+        <div class="menu-card-price">850 DZD</div>
+      </div>
+      <div class="menu-card-desc">Sautéed prawns in garlic-infused olive oil with a touch of smoked paprika and fresh parsley.</div>
+      <span class="menu-card-tag">Chef's Pick</span>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-top">
+        <div class="menu-card-name">Patatas Bravas</div>
+        <div class="menu-card-price">550 DZD</div>
+      </div>
+      <div class="menu-card-desc">Crispy potatoes served with our signature spicy tomato sauce and aioli dip.</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-top">
+        <div class="menu-card-name">Calamares Fritos</div>
+        <div class="menu-card-price">750 DZD</div>
+      </div>
+      <div class="menu-card-desc">Golden-fried squid rings with lemon wedges and homemade tartar sauce.</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-top">
+        <div class="menu-card-name">Pan con Tomate</div>
+        <div class="menu-card-price">350 DZD</div>
+      </div>
+      <div class="menu-card-desc">Toasted sourdough rubbed with ripe tomatoes, garlic, and a drizzle of extra virgin olive oil.</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-top">
+        <div class="menu-card-name">Mejillones Marinera</div>
+        <div class="menu-card-price">800 DZD</div>
+      </div>
+      <div class="menu-card-desc">Fresh mussels steamed in a rich tomato and white wine broth, served with crusty bread.</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-top">
+        <div class="menu-card-name">Croquetas de Jamón</div>
+        <div class="menu-card-price">600 DZD</div>
+      </div>
+      <div class="menu-card-desc">Creamy béchamel croquettes with a crispy golden crust. A classic done perfectly.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery" id="gallery">
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&auto=format&fit=crop" alt="Restaurant ambiance">
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80&auto=format&fit=crop" alt="Seafood dish">
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=600&q=80&auto=format&fit=crop" alt="Paella">
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900&q=80&auto=format&fit=crop" alt="Fine dining table">
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80&auto=format&fit=crop" alt="Tapas spread">
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?w=600&q=80&auto=format&fit=crop" alt="Fresh drinks">
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <p class="section-label">What Guests Say</p>
+    <h2 class="section-title">Moments <em>remembered</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">The paella was absolutely delicious — everything about this place gave real Spanish vibes. Can't wait to come back.</p>
+      <div class="testimonial-author">Google Review · Oran</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">The seafood was fresh, flavorful, and perfectly cooked — every dish tasted like it came straight from the ocean. Ihab's hospitality is second to none.</p>
+      <div class="testimonial-author">Google Review · Oran</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">This restaurant became my favourite. The food was delicious, the staff incredibly kind, and the atmosphere was pleasant. The decor was stunning.</p>
+      <div class="testimonial-author">Google Review · Oran</div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<div style="background:var(--deep);">
+<div class="info" id="contact">
+  <div class="info-block">
+    <p class="section-label">Visit Us</p>
+    <p>
+      <strong>149 Résidence Mirage 2</strong><br>
+      Bir El Djir, Oran 31000<br>
+      Algeria
+    </p>
+  </div>
+  <div class="info-block">
+    <p class="section-label">Opening Hours</p>
+    <p>
+      <strong>Monday – Thursday</strong><br>7:00 PM – 11:00 PM<br><br>
+      <strong>Friday – Saturday</strong><br>7:00 PM – 11:30 PM<br><br>
+      <strong>Sunday</strong><br>Closed
+    </p>
+  </div>
+  <div class="info-block">
+    <p class="section-label">Reservations</p>
+    <p>
+      <strong>Phone</strong><br>
+      <a href="tel:+213661217517">+213 661 21 75 17</a><br><br>
+      Walk-ins welcome based on availability.<br><br>
+      We recommend booking in advance, especially on weekends.
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready for an unforgettable evening?</h2>
+  <p>Join us for dinner and experience the best of Spanish cuisine in Oran.</p>
+  <a href="tel:+213661217517" class="btn-white">Reserve Your Table</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Nahlo's Restaurant</span>
+  <p>149 Résidence Mirage 2 · Bir El Djir · Oran, Algeria</p>
+  <p style="margin-top:.5rem;">© 2026 Nahlo's Restaurant. All rights reserved.</p>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Menu tabs
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.menu-card, .testimonial-card, .info-block').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .6s ease, transform .6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
