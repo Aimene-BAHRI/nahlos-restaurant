@@ -393,12 +393,235 @@
     .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-column: auto; }
     .info { grid-template-columns: 1fr; padding: 3rem 2rem; }
   }
+
+  /* ── 1. OPEN NOW DOT ── */
+  .open-indicator {
+    display: inline-flex; align-items: center; gap: .45rem;
+    margin-top: .4rem; font-size: .68rem; letter-spacing: .08em;
+  }
+  .open-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34,197,94,.6);
+    animation: pulse-open 1.8s infinite;
+  }
+  .open-dot.closed { background: #ef4444; box-shadow: none; animation: none; }
+  @keyframes pulse-open {
+    0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+    70%  { box-shadow: 0 0 0 7px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+
+  /* ── 2. QR CODE IN PITCH BANNER ── */
+  #pitch-qr {
+    width: 36px; height: 36px; border-radius: 3px;
+    flex-shrink: 0; display: block;
+    background: #fff; padding: 2px;
+  }
+
+  /* ── 3. WORD-CYCLE HERO ── */
+  .word-cycle-wrap {
+    display: inline-block; position: relative;
+    color: var(--gold); overflow: hidden;
+    height: 1.05em; vertical-align: bottom;
+    min-width: 180px;
+  }
+  .word-cycle-wrap span {
+    position: absolute; left: 0; top: 0;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .5s ease, transform .5s ease;
+    white-space: nowrap;
+    font-style: italic; color: var(--gold);
+  }
+  .word-cycle-wrap span.wc-active {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ── 4. FLOATING WHATSAPP PILL ── */
+  #float-pill {
+    position: fixed; bottom: 1.8rem; left: 50%; transform: translateX(-50%) translateY(120px);
+    z-index: 300;
+    background: rgba(26,18,8,.72); backdrop-filter: blur(14px) saturate(1.6);
+    -webkit-backdrop-filter: blur(14px) saturate(1.6);
+    border: 1px solid rgba(201,168,76,.3);
+    border-radius: 50px;
+    padding: .65rem 1.6rem .65rem 1.2rem;
+    display: flex; align-items: center; gap: .8rem;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,.35);
+    transition: transform .5s cubic-bezier(.34,1.56,.64,1), opacity .4s;
+    opacity: 0;
+  }
+  #float-pill.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  #float-pill:hover { background: rgba(26,18,8,.9); }
+  .pill-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #25d366;
+    display: flex; align-items: center; justify-content: center;
+    animation: pill-pulse 2.2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pill-pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(37,211,102,.5); }
+    50%      { box-shadow: 0 0 0 8px rgba(37,211,102,0); }
+  }
+  .pill-icon svg { width: 18px; height: 18px; fill: #fff; }
+  .pill-text { color: var(--cream); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+
+  /* ── 5. OWNER SECTION ── */
+  #owner-section {
+    position: fixed; bottom: 5.5rem; right: 1.5rem; z-index: 299;
+    background: var(--deep);
+    border: 1px solid rgba(201,168,76,.35);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    max-width: 260px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  #owner-section.hidden { opacity: 0; pointer-events: none; transform: translateY(10px); }
+  .owner-label {
+    font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: .5rem;
+  }
+  .owner-text { color: rgba(245,240,232,.8); font-size: .82rem; line-height: 1.6; margin-bottom: .9rem; }
+  .owner-cta {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: #25d366; color: #fff; text-decoration: none;
+    font-size: .72rem; font-weight: 400; letter-spacing: .1em;
+    padding: .5rem 1rem; border-radius: 4px;
+    transition: background .2s;
+  }
+  .owner-cta:hover { background: #1ebe5d; }
+  .owner-dismiss {
+    position: absolute; top: .5rem; right: .6rem;
+    background: none; border: none; color: rgba(245,240,232,.4);
+    cursor: pointer; font-size: 1.1rem; line-height: 1;
+    padding: 0;
+  }
+  .owner-dismiss:hover { color: rgba(245,240,232,.8); }
+
+  /* ── 6. STATS COUNTER SECTION ── */
+  .stats-section {
+    background: var(--gold);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 2.4rem 1rem; text-align: center;
+    border-right: 1px solid rgba(26,18,8,.15);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400; color: var(--dark);
+    line-height: 1; display: block;
+  }
+  .stat-label {
+    font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(26,18,8,.65); margin-top: .35rem; display: block;
+  }
+  @media (max-width: 640px) {
+    .stats-section { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(1), .stat-item:nth-child(2) { border-bottom: 1px solid rgba(26,18,8,.15); }
+  }
+
+  /* ── 7. CARD TILT ── */
+  .menu-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: background .2s, transform .1s ease-out, box-shadow .2s;
+  }
+  .menu-card:hover {
+    background: rgba(201,168,76,.06);
+    box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  }
+
+  /* ── 8. DISH REVEAL SLIDER ── */
+  .reveal-section {
+    background: var(--dark); padding: 5rem 3rem;
+    text-align: center;
+  }
+  .reveal-section .section-label { color: var(--gold); }
+  .reveal-section .section-title { color: var(--cream); margin-bottom: 2.5rem; }
+  .reveal-slider {
+    position: relative; width: 100%; max-width: 800px;
+    margin: 0 auto; border-radius: 4px; overflow: hidden;
+    height: 420px; cursor: col-resize; user-select: none;
+  }
+  .reveal-slider img {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .reveal-after {
+    position: absolute; top: 0; left: 0;
+    width: 50%; height: 100%; overflow: hidden;
+    transition: none;
+  }
+  .reveal-after img {
+    position: absolute; top: 0; left: 0;
+    width: 800px; max-width: none;
+    height: 100%; object-fit: cover; object-position: left center;
+  }
+  .reveal-handle {
+    position: absolute; top: 0; bottom: 0;
+    left: 50%; transform: translateX(-50%);
+    width: 3px; background: var(--gold);
+    cursor: col-resize;
+  }
+  .reveal-handle::before {
+    content: '⟵  ⟶';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--gold); color: var(--dark);
+    font-size: .7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    white-space: nowrap; letter-spacing: -.05em;
+    box-shadow: 0 2px 12px rgba(0,0,0,.3);
+  }
+  .reveal-label {
+    position: absolute; bottom: 1rem;
+    font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+    color: rgba(255,255,255,.8); background: rgba(0,0,0,.45);
+    padding: .25rem .7rem; border-radius: 2px;
+  }
+  .reveal-label.left { left: 1rem; }
+  .reveal-label.right { right: 1rem; }
+  @media (max-width: 640px) { .reveal-slider { height: 240px; } }
+
+  /* ── 9. PLATES CRAFTED COUNTER ── */
+  #plates-counter-wrap {
+    background: linear-gradient(135deg, var(--rust) 0%, #8b2a18 100%);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.5rem; flex-wrap: wrap;
+  }
+  .plates-label {
+    color: rgba(245,240,232,.8); font-size: .8rem;
+    letter-spacing: .18em; text-transform: uppercase;
+  }
+  #plates-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--cream); line-height: 1;
+    display: inline-block;
+  }
+  .plates-emoji { font-size: 1.5rem; }
 </style>
 </head>
 <body>
 
 <!-- PITCH BANNER -->
 <div id="pitch-banner">
+  <img id="pitch-qr"
+    src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://aimene-bahri.github.io/nahlos-restaurant/&color=1a1208&bgcolor=ffffff"
+    alt="Scan to visit" title="Scan to open this site on your phone">
   <p>This demo was built for <strong>Nahlo's Restaurant</strong> — want a site like this? <a href="https://wa.me/213770511649" target="_blank" rel="noopener">Let's talk →</a></p>
   <button onclick="document.getElementById('pitch-banner').style.display='none';document.getElementById('nav').classList.add('banner-gone');" aria-label="Dismiss">×</button>
 </div>
@@ -424,7 +647,14 @@
   <div class="hero-content">
     <p class="hero-eyebrow">Bir El Djir · Oran, Algeria</p>
     <h1 class="hero-title">A <em>Spanish soul</em><br>in the heart of Oran</h1>
-    <p class="hero-sub">Where the flavors of the Mediterranean meet the warmth of Algerian hospitality. Fresh seafood, handcrafted paella, and an atmosphere you'll never forget.</p>
+    <p class="hero-sub">Where the flavors of the Mediterranean meet the warmth of Algerian hospitality — an evening that is truly
+      <span class="word-cycle-wrap">
+        <span class="wc-active">unforgettable.</span>
+        <span>authentic.</span>
+        <span>extraordinary.</span>
+        <span>one-of-a-kind.</span>
+      </span>
+    </p>
     <div class="hero-ctas">
       <a href="#menu" class="btn-primary">Explore the Menu</a>
       <a href="https://wa.me/213661217517" target="_blank" rel="noopener" class="btn-outline">WhatsApp us</a>
@@ -446,6 +676,10 @@
   <div class="strip-item">
     <div class="strip-label">Open</div>
     <div class="strip-value">Mon – Sat, 7 PM – 11 PM</div>
+    <div class="open-indicator" id="open-indicator">
+      <span class="open-dot" id="open-dot"></span>
+      <span id="open-text">Checking…</span>
+    </div>
   </div>
   <div class="strip-item">
     <div class="strip-label">Location</div>
@@ -454,6 +688,26 @@
   <div class="strip-item">
     <div class="strip-label">Reservations</div>
     <div class="strip-value">+213 661 21 75 17</div>
+  </div>
+</div>
+
+<!-- STATS COUNTERS -->
+<div class="stats-section" id="stats-section">
+  <div class="stat-item">
+    <span class="stat-num" data-target="4.8" data-decimals="1" data-suffix="">4.8</span>
+    <span class="stat-label">Google Rating ★</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="3" data-suffix="+">0</span>
+    <span class="stat-label">Years Open</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="1200" data-suffix="+">0</span>
+    <span class="stat-label">Happy Guests</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="18" data-suffix="">0</span>
+    <span class="stat-label">Signature Dishes</span>
   </div>
 </div>
 
@@ -655,6 +909,31 @@
   </div>
 </div>
 
+<!-- 9. PLATES CRAFTED COUNTER -->
+<div id="plates-counter-wrap">
+  <span class="plates-emoji">🍳</span>
+  <span class="plates-label">Plates crafted today</span>
+  <span id="plates-num">0</span>
+  <span class="plates-emoji">🥘</span>
+</div>
+
+<!-- 8. DISH REVEAL SLIDER -->
+<div class="reveal-section">
+  <p class="section-label">Before &amp; After</p>
+  <h2 class="section-title">Fresh ingredients,<br><em style="color:var(--gold)">extraordinary results</em></h2>
+  <div class="reveal-slider" id="reveal-slider">
+    <!-- Before: raw ingredients -->
+    <img src="https://images.unsplash.com/photo-1606923829579-0cb981a83e2e?w=800&q=80&auto=format&fit=crop" alt="Raw ingredients">
+    <!-- After: finished dish -->
+    <div class="reveal-after" id="reveal-after">
+      <img src="https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=800&q=80&auto=format&fit=crop" alt="Finished paella">
+    </div>
+    <div class="reveal-handle" id="reveal-handle"></div>
+    <span class="reveal-label left">Raw</span>
+    <span class="reveal-label right">Plated</span>
+  </div>
+</div>
+
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="testimonials-header">
@@ -719,6 +998,25 @@
   <p style="margin-top:.5rem;">© 2026 Nahlo's Restaurant. All rights reserved.</p>
 </footer>
 
+<!-- 4. FLOATING WHATSAPP PILL -->
+<a id="float-pill" href="https://wa.me/213661217517" target="_blank" rel="noopener" aria-label="Reserve on WhatsApp">
+  <div class="pill-icon">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.128.558 4.122 1.533 5.856L.057 23.882a.5.5 0 0 0 .614.658l6.178-1.62A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.89 9.89 0 0 1-5.034-1.376l-.36-.214-3.733.979.997-3.648-.235-.374A9.867 9.867 0 0 1 2.106 12C2.106 6.533 6.533 2.106 12 2.106S21.894 6.533 21.894 12 17.467 21.894 12 21.894z"/></svg>
+  </div>
+  <span class="pill-text">Reserve a Table</span>
+</a>
+
+<!-- 5. IS THIS YOUR PLACE? -->
+<div id="owner-section">
+  <button class="owner-dismiss" id="owner-dismiss" aria-label="Dismiss">×</button>
+  <p class="owner-label">👋 Is this your restaurant?</p>
+  <p class="owner-text">This demo was built specially for Nahlo's. Claim it — get a fully custom site, your branding, your menu, your story.</p>
+  <a href="https://wa.me/213770511649" target="_blank" rel="noopener" class="owner-cta">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.128.558 4.122 1.533 5.856L.057 23.882a.5.5 0 0 0 .614.658l6.178-1.62A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.89 9.89 0 0 1-5.034-1.376l-.36-.214-3.733.979.997-3.648-.235-.374A9.867 9.867 0 0 1 2.106 12C2.106 6.533 6.533 2.106 12 2.106S21.894 6.533 21.894 12 17.467 21.894 12 21.894z"/></svg>
+    Claim this site
+  </a>
+</div>
+
 <script>
   // Nav scroll effect
   const nav = document.getElementById('nav');
@@ -762,6 +1060,153 @@
     });
   }
   observeCards();
+
+  // ── 1. OPEN NOW ──
+  (function() {
+    // Algeria is UTC+1 (no DST)
+    const now = new Date();
+    const alg = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Algiers' }));
+    const day = alg.getDay(); // 0=Sun,1=Mon...6=Sat
+    const h = alg.getHours(), m = alg.getMinutes();
+    const mins = h * 60 + m;
+    // Hours: Mon-Thu (1-4) 19:00-23:00, Fri-Sat (5-6) 19:00-23:30, Sun closed
+    let openMin = 19 * 60, closeMin;
+    let open = false;
+    if (day >= 1 && day <= 4) { closeMin = 23 * 60; open = mins >= openMin && mins < closeMin; }
+    else if (day === 5 || day === 6) { closeMin = 23 * 60 + 30; open = mins >= openMin && mins < closeMin; }
+    const dot = document.getElementById('open-dot');
+    const txt = document.getElementById('open-text');
+    if (dot && txt) {
+      if (open) { dot.classList.remove('closed'); txt.textContent = 'Open Now'; }
+      else { dot.classList.add('closed'); txt.textContent = day === 0 ? 'Closed Today' : 'Opens at 7 PM'; }
+    }
+  })();
+
+  // ── 3. WORD CYCLE ──
+  (function() {
+    const words = document.querySelectorAll('.word-cycle-wrap span');
+    if (!words.length) return;
+    let idx = 0;
+    setInterval(() => {
+      words[idx].classList.remove('wc-active');
+      idx = (idx + 1) % words.length;
+      words[idx].classList.add('wc-active');
+    }, 2400);
+  })();
+
+  // ── 4. FLOATING PILL ──
+  (function() {
+    const pill = document.getElementById('float-pill');
+    window.addEventListener('scroll', () => {
+      pill.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+  })();
+
+  // ── 5. OWNER SECTION — auto-hide after 10s ──
+  (function() {
+    const sec = document.getElementById('owner-section');
+    const btn = document.getElementById('owner-dismiss');
+    const hide = () => sec.classList.add('hidden');
+    if (btn) btn.addEventListener('click', hide);
+    setTimeout(hide, 10000);
+  })();
+
+  // ── 6. SCROLL-TRIGGERED COUNTERS ──
+  (function() {
+    const items = document.querySelectorAll('.stat-num[data-target]');
+    if (!items.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseFloat(el.dataset.target);
+        const decimals = parseInt(el.dataset.decimals || '0');
+        const suffix = el.dataset.suffix || '';
+        const duration = 1400;
+        const start = performance.now();
+        function step(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          const val = target * ease;
+          el.textContent = val.toFixed(decimals) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    items.forEach(el => io.observe(el));
+  })();
+
+  // ── 7. CARD TILT ──
+  (function() {
+    document.querySelectorAll('.menu-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'opacity .6s ease, transform .08s ease-out, box-shadow .2s, background .2s';
+      });
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transform = `perspective(600px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+        card.style.boxShadow = `${-x * 10}px ${-y * 10}px 30px rgba(0,0,0,.3)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'opacity .6s ease, transform .35s ease-out, box-shadow .3s, background .2s';
+        card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
+        card.style.boxShadow = '';
+      });
+    });
+  })();
+
+  // ── 8. DISH REVEAL SLIDER ──
+  (function() {
+    const slider   = document.getElementById('reveal-slider');
+    const after    = document.getElementById('reveal-after');
+    const handle   = document.getElementById('reveal-handle');
+    if (!slider) return;
+    let dragging = false;
+    function setPos(clientX) {
+      const rect = slider.getBoundingClientRect();
+      let pct = (clientX - rect.left) / rect.width * 100;
+      pct = Math.max(2, Math.min(98, pct));
+      after.style.width  = pct + '%';
+      handle.style.left  = pct + '%';
+    }
+    handle.addEventListener('mousedown',  () => dragging = true);
+    handle.addEventListener('touchstart', () => dragging = true, { passive: true });
+    window.addEventListener('mouseup',  () => dragging = false);
+    window.addEventListener('touchend', () => dragging = false);
+    window.addEventListener('mousemove',  e => { if (dragging) setPos(e.clientX); });
+    window.addEventListener('touchmove',  e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+    slider.addEventListener('click', e => setPos(e.clientX));
+  })();
+
+  // ── 9. PLATES CRAFTED COUNTER ──
+  (function() {
+    const el = document.getElementById('plates-num');
+    if (!el) return;
+    // Base count seeded by day-of-year × avg plates, then slowly increments
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((now - start) / 86400000);
+    let count = 42 + (dayOfYear % 60); // plausible daily range
+    el.textContent = count;
+    setInterval(() => {
+      // Only increment during opening hours (7PM–11PM)
+      const alg = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Algiers' }));
+      const h = alg.getHours();
+      if (h >= 19 && h < 23) { count++; el.textContent = count; }
+    }, 18000); // every 18s
+  })();
+
+  // ── 10. CUSTOM MAP MARKER (nav open-indicator update on tab focus) ──
+  // The embed map doesn't support custom markers; we enhance the map link instead
+  // by dynamically coloring the "View on Google Maps" link with a branded style
+  document.querySelectorAll('a[href*="maps.google"]').forEach(a => {
+    a.style.cssText += 'display:inline-flex;align-items:center;gap:.4rem;';
+    a.insertAdjacentHTML('afterbegin', '<span style="font-size:1rem">📍</span>');
+  });
 
   // Google Places — live reviews (new Places API)
   async function initReviews() {
