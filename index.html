@@ -330,6 +330,27 @@
   }
   footer p { font-size: .7rem; letter-spacing: .12em; color: rgba(245,240,232,.35); }
 
+  /* ── PITCH BANNER ── */
+  #pitch-banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: var(--rust);
+    height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; padding: 0 1.5rem;
+  }
+  #pitch-banner p {
+    color: #fff; font-size: .78rem; letter-spacing: .03em; margin: 0;
+  }
+  #pitch-banner a { color: #fff; text-decoration: underline; white-space: nowrap; }
+  #pitch-banner button {
+    background: none; border: none; color: rgba(255,255,255,.7);
+    cursor: pointer; font-size: 1.4rem; line-height: 1;
+    padding: 0; margin-left: auto; flex-shrink: 0;
+  }
+  #pitch-banner button:hover { color: #fff; }
+  nav { top: 44px !important; }
+  nav.banner-gone { top: 0 !important; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 1.2rem 1.5rem; }
@@ -348,6 +369,12 @@
 </style>
 </head>
 <body>
+
+<!-- PITCH BANNER -->
+<div id="pitch-banner">
+  <p>This demo was built for <strong>Nahlo's Restaurant</strong> — want a site like this? <a href="tel:+213770511649">Let's talk →</a></p>
+  <button onclick="document.getElementById('pitch-banner').style.display='none';document.getElementById('nav').classList.add('banner-gone');" aria-label="Dismiss">×</button>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
